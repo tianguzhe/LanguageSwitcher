@@ -88,7 +88,7 @@ bash generate_icon.sh
 
 ## 发布版本
 
-版本唯一来源为 Xcode 工程的 `MARKETING_VERSION`；修改时同步更新 Debug 和 Release 配置。标签必须与 Release 配置完全一致，例如 `1.0` 对应 `v1.0`。
+版本唯一来源为 Xcode 工程的 `MARKETING_VERSION`；修改时同步更新 Debug 和 Release 配置。标签必须与 Release 配置完全一致，例如 `1.0.0` 对应 `v1.0.0`。
 
 从干净的 `main` 分支执行：
 
@@ -99,8 +99,8 @@ bash scripts/release.sh
 脚本先运行测试，再原子推送 `main` 和版本标签。也可手动创建并推送标签：
 
 ```bash
-git tag v1.0
-git push origin v1.0
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 推送普通提交只生成 Actions artifact；推送版本标签才会发布 Release。安装包采用 ad-hoc 签名，未经 Developer ID 签名或 Apple 公证。
