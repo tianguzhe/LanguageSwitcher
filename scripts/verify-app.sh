@@ -22,9 +22,13 @@ if [ "$#" -eq 2 ] && [ "$VERSION" != "$2" ]; then
     printf 'App version %s does not match expected version %s; rebuild before packaging.\n' "$VERSION" "$2" >&2
     exit 1
 fi
-# Check each architecture separately for compatibility across Xcode lipo versions.
+# Read the actual slices: Xcode's lipo versions parse -verify_arch differently.
+ARCHITECTURES="$(xcrun lipo -archs "$APP_PATH/Contents/MacOS/LanguageSwitcher")"
 for architecture in arm64 x86_64; do
-    xcrun lipo -verify_arch "$architecture" "$APP_PATH/Contents/MacOS/LanguageSwitcher"
+    case " $ARCHITECTURES " in
+        *" $architecture "*) ;;
+        *) printf 'Missing %s architecture in %s (found: %s)\n' "$architecture" "$APP_PATH" "$ARCHITECTURES" >&2; exit 1 ;;
+    esac
 done
 codesign --verify --deep --strict "$APP_PATH"
 if [ ! -s "$APP_PATH/Contents/Resources/AppIcon.icns" ]; then
