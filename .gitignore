@@ -1,0 +1,12 @@
+.DS_Store
+/build/
+/dist/
+/.ui-review/
+/dmg_build/
+/LanguageSwitcher_*.dmg
+**/xcuserdata/
+*.xcuserstate
+__pycache__/
+*.py[cod]
+/.venv/
+/DerivedData/
